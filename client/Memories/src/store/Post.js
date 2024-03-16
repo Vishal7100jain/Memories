@@ -8,7 +8,12 @@ export const PostsSlice = createSlice({
             Post.Posts = action.payload
         },
         createPost: (state, action) => {
-            state.Posts = [action.payload];
+            state.Posts = [...state.Posts, action.payload];
+        },
+        deletePost: (state, action) => {
+            state.Posts = state.Posts.filter((item) => {
+                return item._id !== action.payload._id
+            })
         }
     }
 })

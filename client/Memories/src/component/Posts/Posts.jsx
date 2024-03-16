@@ -1,14 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import makeStyles from './style'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchData } from '../../actions/Post.js'
+import { DeletePost, fetchData } from '../../actions/Post.js'
 import { CircularProgress, Grid } from '@material-ui/core'
 import { Post } from './Post/post.jsx'
 
 const Posts = () => {
     const { Posts } = useSelector((state) => state.Post)
     const dispatch = useDispatch()
+    let [data, setData] = useState(false)
     const classes = makeStyles()
+
+    const HandleDeletePost = (e) => {
+        dispatch(DeletePost(e))
+        setData((pre) => !pre)
+    }
 
     useEffect(() => {
         dispatch(fetchData())
@@ -19,9 +25,8 @@ const Posts = () => {
             {!Posts.length ? <CircularProgress /> :
                 (<Grid className={classes.card} container alignItems='stretch' spacing={3} >
                     {Posts.map((item) => {
-                        <Grid item key={item._id} xs={12} sm={6}>
-                            {/* {console.log(item)} */}
-                            <Post post={item}></Post>
+                        return <Grid key={item._id} item sm={6} xs={12}>
+                            <Post post={item} deletePost={(e) => HandleDeletePost(e)} />
                         </Grid>
                     })}
                 </Grid>)

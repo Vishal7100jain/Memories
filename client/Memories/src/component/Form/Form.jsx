@@ -9,18 +9,20 @@ const CreateForm = () => {
     const [postData, setPostData] = useState({ creator: "", title: "", message: "", tags: "", selectedFile: "" })
     const classes = makeStyles()
     const dispatch = useDispatch()
-    const clear = () => {
 
+    const clear = () => {
+        setPostData({ creator: "", title: "", message: "", tags: "", selectedFile: "" })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(createPost(postData))
+        setPostData({ creator: "", title: "", message: "", tags: "", selectedFile: "" })
     }
 
     return (
         <Paper className={classes.paper}>
-            <form onSubmit={handleSubmit} method='POST' autoComplete='off' noValidate className={classes.root}>
+            <form method='POST' autoComplete='off' noValidate className={classes.root}>
                 <Typography variant='h6'>
                     Creating a Memory
                 </Typography>
@@ -29,7 +31,7 @@ const CreateForm = () => {
                 <TextField name='message' variant='outlined' label="message" value={postData.message} fullWidth onChange={(e) => setPostData({ ...postData, message: e.target.value })}></TextField>
                 <TextField name='tags' variant='outlined' label="tags" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value })}></TextField>
                 <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })}></FileBase>
-                <Button variant='contained' color='primary' size='large' type='submit' fullWidth className={classes.buttonSubmit}>
+                <Button variant='contained' onClick={handleSubmit} color='primary' size='large' type='button' fullWidth className={classes.buttonSubmit}>
                     Submit
                 </Button>
                 <Button variant='contained' color='secondary' size='small' onClick={clear} fullWidth className={classes.buttonSubmit}>
