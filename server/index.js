@@ -15,9 +15,7 @@ app.use(cors())
 
 const PORT = process.env.PORT || 5000
 
-mongoose.connect(MONGO_URL, {
-    useUnifiedTopology: true
-})
+mongoose.connect(MONGO_URL)
     .then(res => app.listen(PORT, () => {
         console.log(`Server is running on http://localhost:${PORT}`)
     }))

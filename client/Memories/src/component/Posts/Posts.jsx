@@ -21,12 +21,12 @@ const Posts = () => {
     }, [dispatch])
 
     return (
-        <div className={classes.card}>
+        <div className={classes.mainContainer}>
             {!Posts.length ? <CircularProgress /> :
                 (<Grid className={classes.card} container alignItems='stretch' spacing={3} >
                     {Posts.map((item) => {
                         return <Grid key={item._id} item sm={6} xs={12}>
-                            <Post post={item} deletePost={(e) => HandleDeletePost(e)} />
+                            <Post post={item} EditPost={(e) => handleEditPost(e)} deletePost={(e) => HandleDeletePost(e)} />
                         </Grid>
                     })}
                 </Grid>)
