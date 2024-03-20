@@ -41,7 +41,6 @@ export const Post = ({ post, deletePost }) => {
                 </div>
 
                 <div className={classes.details}>
-                    {console.log(post.tags)}
                     <Typography variant='body2' color='textSecondary'>{post.tags.map((tag) => `#${tag} `)}</Typography>
                 </div>
 
