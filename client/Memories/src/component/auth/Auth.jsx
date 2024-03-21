@@ -9,9 +9,10 @@ import { useDispatch } from "react-redux"
 import Axios from "axios"
 import GoogleButton from 'react-google-button'
 import { AuthAction } from "../../store/Auth"
-
+import { useNavigate } from "react-router"
 
 export const Auth = () => {
+    const history = useNavigate()
     const state = null
     const classes = makeStyles()
     const dispatch = useDispatch()
@@ -61,7 +62,9 @@ export const Auth = () => {
                         }
                     })
                     .then((res) => {
-                        dispatch(AuthAction.GoogleAuth(res))
+                        dispatch(AuthAction.GoogleAuth(res.data))
+                        setUser(res.data)
+                        history('/')
                     })
                     .catch((err) => console.log(err));
             }

@@ -5,8 +5,8 @@ const Auth = createSlice({
     initialState: null,
     reducers: {
         GoogleAuth: (state, action) => {
-            localStorage.setItem("Profile", JSON.stringify({ ...action.payload.data }))
-            return state = action.payload.data
+            localStorage.setItem("Profile", JSON.stringify({ ...action.payload }))
+            return state = action.payload
         }
     }
 })

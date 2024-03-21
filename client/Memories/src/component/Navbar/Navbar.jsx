@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { googleLogout } from '@react-oauth/google';
 import {
     AppBar,
@@ -11,14 +11,22 @@ import { Link, json } from 'react-router-dom'
 
 import images from '../image/memories.png';
 import makeStyles from './NavbarStyle.jsx';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     let [user, setUser] = useState(JSON.parse(localStorage.getItem('Profile')))
+    const userData = useSelector((state) => state.Auth)
     const classes = makeStyles()
+
     const Logout = () => {
         googleLogout()
+        localStorage.removeItem("Profile")
         setUser(null)
     }
+
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('Profile')))
+    }, [userData])
 
     return (
         <AppBar className={classes.appBar} position='static' color='inherit'>
