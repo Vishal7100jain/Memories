@@ -3,13 +3,12 @@ import { Avatar, Button, Paper, Grid, Typography, Container, TextField, ButtonBa
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import makeStyles from "./Style"
 import Input from './input'
-import Icon from "./Icon"
-import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import { useDispatch } from "react-redux"
 import Axios from "axios"
 import GoogleButton from 'react-google-button'
 import { AuthAction } from "../../store/Auth"
-import { useNavigate } from "react-router"
+import { useNavigate } from "react-router-dom"
 
 export const Auth = () => {
     const history = useNavigate()
@@ -20,9 +19,11 @@ export const Auth = () => {
     let [showPassword, setPassword] = useState(false)
     let [confirmPassword, setConfirmPassword] = useState(false)
     let [User, setUser] = useState(null)
+    let [formData, setFormData] = useState({ firstname: "", lastname: "", email: "", password: "" })
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log(e.target)
     }
 
     const handleChange = () => {
@@ -37,6 +38,7 @@ export const Auth = () => {
     }
 
     const switchMode = () => {
+        console.log("clicked")
         setIsSignUp((pre) => !pre)
     }
 
@@ -79,7 +81,7 @@ export const Auth = () => {
                     <LockOutlinedIcon></LockOutlinedIcon>
                 </Avatar>
                 <Typography variant="h5">{isSignUp ? 'Sign Up' : 'Sign In'}</Typography>
-                <form className={classes.form} onSubmit={() => handleSubmit()}>
+                <form onSubmit={handleSubmit} className={classes.form} >
                     <Grid container spacing={2}>
                         {isSignUp && (
                             <>
@@ -87,30 +89,27 @@ export const Auth = () => {
                                 <Input name="LastName" label="LastName" handleChange={handleChange} autoFocus half={true} />
                             </>
                         )}
-                        <Input name="email" label="email" handleChange={handleChange} type="email"></Input>
-                        <Input name="password" label="password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword}></Input>
+                        <Input name="email" label="Email" handleChange={handleChange} type="email"></Input>
+                        <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword}></Input>
 
                         {isSignUp && <Input name='password' label='Repeat Password' handleChange={handleChange} handleShowPassword={handleShowConfirmPassword} type={confirmPassword ? 'text' : 'password'} />}
                         <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                             {isSignUp ? 'Sign Up' : 'Sign In'}
                         </Button>
                         <Grid container justifyContent="center">
-                            <useGoogleLogin>
-                                <GoogleButton
-                                    onClick={() => login()}
-                                />
-                            </useGoogleLogin>
+                            <GoogleButton
+                                onClick={() => login()}
+                            />
                         </Grid>
                         <Grid container justifyContent="flex-end">
                             <Grid item >
-                                <Button onClick={switchMode}>
+                                <Button onClick={() => switchMode()}>
                                     {isSignUp ? `Already have an account : Sign In` : `Don't have an account  : Sign Up`}</Button>
                             </Grid>
                         </Grid>
                     </Grid>
-                </form>
+                </form >
             </Paper>
         </Container >
     )
 }
-
