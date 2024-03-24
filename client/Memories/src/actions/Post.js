@@ -4,6 +4,7 @@ import { PostAction, PostIdAction } from '../store/Post.js';
 const withErrorHandling = async (dispatch, acitonFunction, actionCreate) => {
     try {
         const { data } = await acitonFunction();
+        console.log(data)
         dispatch(actionCreate(data))
     } catch (error) {
         console.log(error)

@@ -30,12 +30,16 @@ export const Delete = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ msg: "Invalid Post Id" })
     const userId = req.userId
 
-    const post = await Post.findOne({ _id: id })
-    if (post.creator[0].equals(userId)) {
-        await Post.findOneAndDelete({ _id: id })
-        res.status(200).json(post)
-    } else {
-        res.status(404).json({ msg: "You are not owner of this post" })
+    try {
+        const post = await Post.findOne({ _id: id })
+        if (post.creator[0].equals(userId)) {
+            const post = await Post.findOneAndDelete({ _id: id }, { new: true })
+            res.status(200).json(post)
+        } else {
+            res.status(404).json({ msg: "You are not owner of this post" })
+        }
+    } catch (err) {
+        console.log(err)
     }
 }
 
@@ -68,7 +72,19 @@ export const UpdatePost = async (req, res) => {
 export const like = async (req, res) => {
     const { id } = req.params
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ msg: "Invalid Post" })
-    const post = await Post.findById(id)
-    const UpdatedPost = await Post.findByIdAndUpdate(id, { $inc: { likeCount: 1 } }, { new: true })
-    res.status(200).json(UpdatedPost)
+    const user = req.userId
+
+    const UpdatedPost = await Post.findById(id)
+
+    if (UpdatedPost.LikeBy.includes(user)) {
+        const UpdatedPost = await Post.findByIdAndUpdate(id, { $inc: { likeCount: -1 } }, { new: true })
+        UpdatedPost.LikeBy.pop(user)
+        UpdatedPost.save()
+        res.status(200).json(UpdatedPost)
+    } else {
+        const UpdatedPost = await Post.findByIdAndUpdate(id, { $inc: { likeCount: 1 } }, { new: true })
+        UpdatedPost.LikeBy.push(user)
+        UpdatedPost.save()
+        res.status(200).json(UpdatedPost)
+    }
 }

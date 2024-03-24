@@ -5,17 +5,19 @@ import Stack from '@mui/material/Stack';
 import { Link } from 'react-router-dom'
 import images from '../image/memories.png';
 import makeStyles from './NavbarStyle.jsx';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { AuthAction } from '../../store/Auth.js';
 
 const Navbar = () => {
     let [user, setUser] = useState(JSON.parse(localStorage.getItem('Profile')))
+    const dispatch = useDispatch()
     const userData = useSelector((state) => state.Auth)
     const classes = makeStyles()
 
     const Logout = () => {
+        dispatch(AuthAction.Logout())
         googleLogout()
-        localStorage.removeItem("Profile")
         setUser(null)
     }
 

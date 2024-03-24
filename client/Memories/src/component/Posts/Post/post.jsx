@@ -4,7 +4,6 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { PostToUpdate, like } from '../../../actions/Post'
 
