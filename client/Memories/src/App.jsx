@@ -1,42 +1,25 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
-import {
-  Container,
-  AppBar,
-  Typography,
-  Grow,
-  Grid
-} from '@material-ui/core';
-import makeStyles from './style';
-import images from './component/image/memories.png';
-import Posts from './component/Posts/Posts.jsx';
-import CreateForm from './component/Form/Form.jsx'
+import { Container } from '@material-ui/core';
+import Navbar from './component/Navbar/Navbar.jsx';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainContainer from './component/mainContainer/mainContainer.jsx';
+import { Auth } from './component/auth/Auth.jsx';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
-  const classes = makeStyles();
-
   return (
     <>
-      <Container maxWidth='lg'>
-        <AppBar className={classes.appBar} position='static' color='inherit'>
-          <Typography className={classes.heading} variant='h2' align='center'>
-            Memories
-            <img src={images} className={classes.image} alt="Memories" height="60" />
-          </Typography>
-        </AppBar>
-        <Grow in>
-          <Container>
-            <Grid container justifyContent='space-between' alignItems='stretch' spacing={3}>
-              <Grid item xs={12} sm={8}>
-                <Posts />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <CreateForm></CreateForm>
-              </Grid>
-            </Grid>
-          </Container>
-        </Grow >
-      </Container >
+      <BrowserRouter>
+        <GoogleOAuthProvider clientId="279998069210-b14n7974gs2rn29lc2miqlb67k114ofp.apps.googleusercontent.com">
+          <Container maxWidth='lg'>
+            <Navbar />
+            <Routes >
+              <Route path='/' exact Component={MainContainer}></Route>
+              <Route path='/auth' Component={Auth}></Route>
+            </Routes>
+          </Container >
+        </GoogleOAuthProvider>
+      </BrowserRouter >
     </>
   )
 }

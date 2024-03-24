@@ -1,29 +1,59 @@
 import * as api from '../api/index.js'
-import { PostAction } from '../store/Post.js';
+import { PostAction, PostIdAction } from '../store/Post.js';
+
+const withErrorHandling = async (dispatch, acitonFunction, actionCreate) => {
+    try {
+        const { data } = await acitonFunction();
+        dispatch(actionCreate(data))
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const fetchData = () => async (dispatch) => {
-    try {
-        const { data } = await api.fetchPost("Post");
-        dispatch(PostAction.GetPost(data))
-    } catch (error) {
-        console.log(error.message)
-    }
+    await withErrorHandling(
+        dispatch,
+        async () => await api.fetchPost("Post"),
+        PostAction.GetPost
+    )
 }
 
 export const createPost = (PostData) => async (dispatch) => {
-    try {
-        const { data } = await api.createPost(PostData)
-        dispatch(PostAction.createPost(data))
-    } catch (error) {
-        console.log(error.message)
-    }
+    await withErrorHandling(
+        dispatch,
+        async () => await api.createPost(PostData),
+        PostAction.createPost
+    )
 }
 
 export const DeletePost = (PostId) => async (dispatch) => {
-    try {
-        const { data } = await api.deletePost(PostId)
-        dispatch(PostAction.deletePost(data))
-    } catch (err) {
-        console.log(err)
-    }
+    await withErrorHandling(
+        dispatch,
+        async () => await api.deletePost(PostId),
+        PostAction.deletePost
+    )
+}
+
+export const PostToUpdate = (PostId) => async (dispatch) => {
+    await withErrorHandling(
+        dispatch,
+        async () => await api.getSinglePost(PostId),
+        PostIdAction.setPostId
+    )
+}
+
+export const UpdatePost = (PostData) => async (dispatch) => {
+    await withErrorHandling(
+        dispatch,
+        async () => await api.UpdatePost(PostData),
+        PostAction.UpdatePost
+    )
+}
+
+export const like = (Id) => async (dispatch) => {
+    await withErrorHandling(
+        dispatch,
+        async () => await api.Like(Id),
+        PostAction.like
+    )
 }
