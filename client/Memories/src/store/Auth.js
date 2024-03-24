@@ -7,6 +7,10 @@ const Auth = createSlice({
         Auth: (state, action) => {
             localStorage.setItem("Profile", JSON.stringify({ ...action.payload }))
             return state = action.payload
+        },
+        Logout: (state, action) => {
+            localStorage.removeItem("Profile")
+            return state = null
         }
     }
 })
