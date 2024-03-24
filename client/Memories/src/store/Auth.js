@@ -1,10 +1,10 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const Auth = createSlice({
     name: "Auth",
     initialState: null,
     reducers: {
-        GoogleAuth: (state, action) => {
+        Auth: (state, action) => {
             localStorage.setItem("Profile", JSON.stringify({ ...action.payload }))
             return state = action.payload
         }

@@ -9,25 +9,30 @@ import Axios from "axios"
 import GoogleButton from 'react-google-button'
 import { AuthAction } from "../../store/Auth"
 import { useNavigate } from "react-router-dom"
+import { signUp, signIn, googleLogin } from '../../actions/auth.js'
 
 export const Auth = () => {
     const history = useNavigate()
-    const state = null
     const classes = makeStyles()
     const dispatch = useDispatch()
     let [isSignUp, setIsSignUp] = useState(false)
     let [showPassword, setPassword] = useState(false)
     let [confirmPassword, setConfirmPassword] = useState(false)
     let [User, setUser] = useState(null)
-    let [formData, setFormData] = useState({ firstname: "", lastname: "", email: "", password: "" })
+    let [formData, setFormData] = useState({ FirstName: "", LastName: "", Email: "", Password: "" })
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(e.target)
+        if (isSignUp) {
+            dispatch(signUp(formData, history))
+        } else {
+            dispatch(signIn(formData, history))
+        }
     }
 
-    const handleChange = () => {
 
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
     const handleShowPassword = () => {
@@ -38,7 +43,6 @@ export const Auth = () => {
     }
 
     const switchMode = () => {
-        console.log("clicked")
         setIsSignUp((pre) => !pre)
     }
 
@@ -64,9 +68,8 @@ export const Auth = () => {
                         }
                     })
                     .then((res) => {
-                        dispatch(AuthAction.GoogleAuth(res.data))
+                        dispatch(googleLogin({ Email: res.data.email }, history))
                         setUser(res.data)
-                        history('/')
                     })
                     .catch((err) => console.log(err));
             }
@@ -85,14 +88,15 @@ export const Auth = () => {
                     <Grid container spacing={2}>
                         {isSignUp && (
                             <>
-                                <Input name="firstName" label="FirstName" handleChange={handleChange} autoFocus half={true} />
+                                <Input name="FirstName" label="FirstName" handleChange={handleChange} autoFocus half={true} />
                                 <Input name="LastName" label="LastName" handleChange={handleChange} autoFocus half={true} />
                             </>
                         )}
-                        <Input name="email" label="Email" handleChange={handleChange} type="email"></Input>
-                        <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword}></Input>
+                        <Input name="Email" label="Email" handleChange={handleChange} type="email"></Input>
+                        <Input name="Password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword}></Input>
 
-                        {isSignUp && <Input name='password' label='Repeat Password' handleChange={handleChange} handleShowPassword={handleShowConfirmPassword} type={confirmPassword ? 'text' : 'password'} />}
+                        {isSignUp && <Input name='Password' label='Repeat Password' handleChange={handleChange} handleShowPassword={handleShowConfirmPassword} type={confirmPassword ? 'text' : 'password'} />}
+
                         <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                             {isSignUp ? 'Sign Up' : 'Sign In'}
                         </Button>

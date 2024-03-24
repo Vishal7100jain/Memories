@@ -16,6 +16,7 @@ export const PostsSlice = createSlice({
             })
         },
         UpdatePost: (state, action) => {
+            console.log(action.payload)
             state.Posts = state.Posts.map((item) => {
                 if (item._id === action.payload._id) {
                     return item = action.payload

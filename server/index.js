@@ -3,7 +3,10 @@ import cors from 'cors'
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
-import router from "./routes/posts.js";
+import PostRoute from "./routes/posts.js";
+import UserRoute from './routes/user.js'
+import User from "./models/user.js";
+
 dotenv.config()
 
 const MONGO_URL = process.env.MONGO_URL
@@ -16,10 +19,13 @@ app.use(cors())
 const PORT = process.env.PORT || 5000
 
 mongoose.connect(MONGO_URL)
-    .then(res => app.listen(PORT, () => {
+    .then(() => app.listen(PORT, () => {
         console.log(`Server is running on http://localhost:${PORT}`)
     }))
     .catch(err => console.log(err))
 
-app.use("/", router)
+app.use("/", PostRoute)
+app.use("/User", UserRoute)
 
+// User.deleteMany({}).then(res => console.log(res))
+// User.find({}).then(res => console.log(res))

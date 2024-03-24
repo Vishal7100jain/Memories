@@ -35,8 +35,8 @@ const Navbar = () => {
                 {user ? (
                     <div className={classes.profile}>
                         <Stack direction='row' spacing={2}>
-                            <Avatar className={classes.purple} alt={user.name} src={user.imageUrl}>{user.name.charAt(0)}</Avatar>
-                            <Typography className={classes.userName} variant='h6' >{user.name}</Typography>
+                            <Avatar className={classes.purple} alt={user.name} src={user.imageUrl}>{user.name.charAt(0).toUpperCase()}</Avatar>
+                            <Typography className={classes.userName} variant='h6' >{user.name.toUpperCase()}</Typography>
                         </Stack>
                         <LoadingButton onClick={() => Logout()} variant="contained">
                             <span>Logout</span>

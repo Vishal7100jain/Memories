@@ -7,12 +7,12 @@ import { UpdatePost, createPost } from '../../actions/Post'
 import { PostIdAction } from '../../store/Post'
 
 const CreateForm = () => {
-    const [postData, setPostData] = useState({ creator: "", title: "", message: "", tags: "", selectedFile: "" })
+    const [postData, setPostData] = useState({ title: "", message: "", tags: "", selectedFile: "" })
     const classes = makeStyles()
     const dispatch = useDispatch()
     const PostToUpdate = useSelector((state) => state.PostId)
     const clear = () => {
-        setPostData({ creator: "", title: "", message: "", tags: "", selectedFile: "" })
+        setPostData({ title: "", message: "", tags: "", selectedFile: "" })
     }
 
     useEffect(() => {
@@ -39,7 +39,6 @@ const CreateForm = () => {
                 <Typography variant='h5' align='center'>
                     {PostToUpdate.length == 0 ? 'Create' : "Update"} a Memory
                 </Typography>
-                <TextField name='creator' variant='outlined' value={postData.creator} label="Creator" fullWidth onChange={(e) => setPostData({ ...postData, creator: e.target.value })}></TextField>
                 <TextField name='title' variant='outlined' label="Title" value={postData.title} fullWidth onChange={(e) => setPostData({ ...postData, title: e.target.value })}></TextField>
                 <TextField name='message' variant='outlined' label="Message" value={postData.message} fullWidth onChange={(e) => setPostData({ ...postData, message: e.target.value })}></TextField>
                 <TextField name='tags' variant='outlined' label="Tags" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(",") })}></TextField>
