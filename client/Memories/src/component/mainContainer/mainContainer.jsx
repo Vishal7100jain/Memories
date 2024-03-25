@@ -3,6 +3,9 @@ import React from 'react'
 import Posts from '../Posts/Posts'
 import CreateForm from '../Form/Form'
 import makeStyles from './style'
+import { Paper } from '@material-ui/core'
+import Paginate from '../pagination.jsx'
+
 const MainContainer = () => {
     const classes = makeStyles()
     return (
@@ -15,6 +18,9 @@ const MainContainer = () => {
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <CreateForm></CreateForm>
+                            <Paper elevation={6}>
+                                <Paginate></Paginate>
+                            </Paper>
                         </Grid>
                     </Grid>
                 </Container>

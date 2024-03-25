@@ -8,6 +8,7 @@ import makeStyles from './NavbarStyle.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { AuthAction } from '../../store/Auth.js';
+import jwtDecode from 'jwt-decode';
 
 const Navbar = () => {
     let [user, setUser] = useState(JSON.parse(localStorage.getItem('Profile')))
@@ -16,13 +17,21 @@ const Navbar = () => {
     const classes = makeStyles()
 
     const Logout = () => {
-        dispatch(AuthAction.Logout())
         googleLogout()
         setUser(null)
+        dispatch(AuthAction.Logout())
     }
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('Profile')))
+
+        const token = user?.token
+        if (token) {
+            const decodedToken = jwtDecode(token)
+            if (decodedToken.exp * 1000 < new Date().getTime()) {
+                return Logout()
+            }
+        }
     }, [userData])
 
     return (

@@ -36,3 +36,4 @@ const postSchema = new mongoose.Schema({
 
 const Post = new mongoose.model("Post", postSchema)
 export default Post
+

@@ -6,11 +6,13 @@ const Auth = createSlice({
     reducers: {
         Auth: (state, action) => {
             localStorage.setItem("Profile", JSON.stringify({ ...action.payload }))
-            return state = action.payload
+            state = action.payload
+            return state
         },
         Logout: (state, action) => {
             localStorage.removeItem("Profile")
-            return state = null
+            state = null
+            return state
         }
     }
 })

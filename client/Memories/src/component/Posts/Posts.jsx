@@ -18,7 +18,7 @@ const Posts = () => {
 
     useEffect(() => {
         dispatch(fetchData())
-    }, [dispatch])
+    }, [dispatch, Posts])
 
     return (
         <div className={classes.mainContainer}>
