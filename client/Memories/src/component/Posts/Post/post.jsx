@@ -1,14 +1,16 @@
 import makeStyles from './style'
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core'
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, Paper } from '@material-ui/core'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { PostToUpdate, like } from '../../../actions/Post'
+import { useEffect, useRef, useState } from 'react'
 
-export const Post = ({ post, deletePost }) => {
+export const Post = ({ post, user, deletePost }) => {
     let dispatch = useDispatch()
+    let [render, setRender] = useState(false)
 
     function handleLike() {
         dispatch(like(post._id))
@@ -26,18 +28,21 @@ export const Post = ({ post, deletePost }) => {
     return (
         <>
             <Card className={classes.card}>
-                <CardMedia className={classes.media} image={post.selectedFile} title={post.title}></CardMedia>
+                <CardMedia className={classes.media} image={post.selectedFile} src={post.selectedFile} title={post.title}></CardMedia>
 
                 <div className={classes.overlay}>
-                    <Typography variant='h6'>{post.creator[0].Name}</Typography>
+                    <Typography variant='h5'>{post.creator[0].Name}</Typography>
                     <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
                 </div>
-
-                <div className={classes.overlay2} >
-                    <Button style={{ color: "white" }} size='small' onClick={() => handleEdit()}>
-                        <MoreHorizIcon fontSize='default'></MoreHorizIcon>
-                    </Button>
-                </div>
+                {user && (user.userId === post.creator[0]._id) &&
+                    <>
+                        <div className={classes.overlay2} >
+                            <Button style={{ color: "white" }} size='small' onClick={() => handleEdit()}>
+                                <MoreHorizIcon fontSize='medium'></MoreHorizIcon>
+                            </Button>
+                        </div>
+                    </>
+                }
 
                 <div className={classes.details}>
                     <Typography variant='body2' color='textSecondary'>{post.tags.map((tag) => `#${tag} `)}</Typography>
@@ -49,17 +54,30 @@ export const Post = ({ post, deletePost }) => {
                 </CardContent>
 
                 <CardActions className={classes.cardActions}>
-                    <Button size='small' color='primary' onClick={() => handleLike()}>
-                        <ThumbUpAltIcon fontSize='default'></ThumbUpAltIcon>
+                    {user ? <Button size='small' color='primary' onClick={() => handleLike()}>
+                        <ThumbUpAltIcon fontSize='medium'></ThumbUpAltIcon>
                         Like &nbsp;
                         {post.likeCount}
                     </Button>
-                    <Button size='small' color='primary' onClick={() => handleDelete()}>
-                        <DeleteIcon fontSize='default'></DeleteIcon>
-                        &nbsp; Delete
-                    </Button>
+                        :
+                        <Button size='small' disabled color='primary' onClick={() => handleLike()}>
+                            <ThumbUpAltIcon fontSize='medium'></ThumbUpAltIcon>
+                            Like &nbsp;
+                            {post.likeCount}
+                        </Button>
+                    }
+                    {user && (user.userId === post.creator[0]._id) ?
+                        <>
+                            <Button Button size='small' color='primary' onClick={() => handleDelete()}>
+                                <DeleteIcon fontSize='medium'></DeleteIcon>
+                                &nbsp; Delete
+                            </Button>
+                        </>
+                        :
+                        <Paper variant='elevation'>Post By : {post.creator[0].Name.toUpperCase()}</Paper>
+                    }
                 </CardActions>
-            </Card>
+            </Card >
         </ >
     )
 }

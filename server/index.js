@@ -29,3 +29,5 @@ app.use("/User", UserRoute)
 
 // User.deleteMany({}).then(res => console.log(res))
 // User.find({}).then(res => console.log(res))
+
+

@@ -4,25 +4,25 @@ export const PostsSlice = createSlice({
     name: "Post",
     initialState: { Posts: [] },
     reducers: {
-        GetPost: (Post, action) => {
-            Post.Posts = action.payload
+        GetPost: (state, action) => {
+            state.Posts = action.payload
         },
         createPost: (state, action) => {
             state.Posts = [...state.Posts, action.payload];
         },
         deletePost: (state, action) => {
-            console.log(action.payload)
             state.Posts = state.Posts.filter((item) => {
                 return item._id !== action.payload._id
             })
         },
         UpdatePost: (state, action) => {
-            console.log(action.payload)
             state.Posts = state.Posts.map((item) => {
                 if (item._id === action.payload._id) {
-                    return item = action.payload
+                    item = action.payload
+                    return item
                 }
             })
+            return state.Posts
         },
         like: (state, action) => {
             state.Posts = state.Posts.map((item) => {
@@ -30,8 +30,12 @@ export const PostsSlice = createSlice({
                     item.likeCount = action.payload.likeCount
                     return item
                 }
+                return item
             })
-        }
+        },
+        GetPostBySearch: (state, action) => {
+            state.Posts = action.payload
+        },
     }
 })
 
@@ -45,5 +49,16 @@ export const PostIdSlice = createSlice({
     }
 })
 
+export const SearchPostSlice = createSlice({
+    name: 'SearchPost',
+    initialState: [],
+    reducers: {
+        getSearchPost: (state, action) => {
+            return state = action.payload
+        }
+    }
+})
+
+export const SearchPostAction = SearchPostSlice.actions
 export const PostIdAction = PostIdSlice.actions
 export const PostAction = PostsSlice.actions
