@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '@material-ui/core';
 import Navbar from './component/Navbar/Navbar.jsx';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
 import MainContainer from './component/mainContainer/mainContainer.jsx';
 import { Auth } from './component/auth/Auth.jsx';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import PostDetails from './component/postDetails/PostDetails.jsx';
+import { useSelector } from 'react-redux';
 
 function App() {
-  const user = JSON.parse(localStorage.getItem("Profile"))
+  const user = useSelector((state) => state.Auth)
   const [render, setRender] = useState(false)
 
   useEffect(() => {
