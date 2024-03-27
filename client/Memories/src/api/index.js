@@ -17,6 +17,7 @@ export const deletePost = (PostId) => API.delete("delete/" + PostId)
 export const getSinglePost = (PostId) => API.get("Update/" + PostId)
 export const UpdatePost = (PostData) => API.patch("Update/", PostData)
 export const Like = (id) => API.patch("like/" + id)
+export const SearchPost = (PostDetails) => API.post("Search/", PostDetails)
 
 // User work Api
 export const SignUp = (userData) => API.post("User/SignUp", userData)

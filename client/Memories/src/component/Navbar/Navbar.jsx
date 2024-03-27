@@ -3,7 +3,8 @@ import { googleLogout } from '@react-oauth/google';
 import { AppBar, Avatar, Button, Grid, Toolbar, Typography, } from '@material-ui/core';
 import Stack from '@mui/material/Stack';
 import { Link } from 'react-router-dom'
-import images from '../image/memories.png';
+import images from '../../assets/memories-Logo.png';
+import LogoText from '../../assets/memories-Text.png';
 import makeStyles from './NavbarStyle.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -38,7 +39,8 @@ const Navbar = () => {
         <AppBar className={classes.appBar} position='static' color='inherit'>
             <div className={classes.brandContainer}>
                 <Typography component={Link} to='/' className={classes.heading} variant='h2' align='center'>
-                    Memories
+                    <img src={LogoText} className={classes.image} alt="Memories" height="60" />
+
                 </Typography>
                 <img src={images} className={classes.image} alt="Memories" height="60" />
             </div>

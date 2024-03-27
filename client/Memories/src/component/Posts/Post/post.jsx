@@ -8,28 +8,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { PostToUpdate, like } from '../../../actions/Post'
 import { useEffect, useRef, useState } from 'react'
 
-export const Post = ({ post, deletePost }) => {
+export const Post = ({ post, user, deletePost }) => {
     let dispatch = useDispatch()
-    const user = useSelector((state) => state.Auth)
     let [render, setRender] = useState(false)
-    const isInitialRender = useRef(true);
 
     function handleLike() {
         dispatch(like(post._id))
     }
-
-
-    useEffect(() => {
-        // Skip the effect on the initial render
-        if (isInitialRender.current) {
-            isInitialRender.current = false;
-            return;
-        }
-
-        // Run the effect only when the user changes
-        setRender(prev => !prev);
-    }, [user]);
-
 
     const handleEdit = () => {
         dispatch(PostToUpdate(post._id))
@@ -43,19 +28,21 @@ export const Post = ({ post, deletePost }) => {
     return (
         <>
             <Card className={classes.card}>
-                <CardMedia className={classes.media} image={post.selectedFile} title={post.title}></CardMedia>
+                <CardMedia className={classes.media} image={post.selectedFile} src={post.selectedFile} title={post.title}></CardMedia>
 
                 <div className={classes.overlay}>
-                    <Typography variant='h6'>{post.creator[0].Name}</Typography>
+                    <Typography variant='h5'>{post.creator[0].Name}</Typography>
                     <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
                 </div>
-                {user && (user.userId === post.creator[0]._id) && <>
-                    <div className={classes.overlay2} >
-                        <Button style={{ color: "white" }} size='small' onClick={() => handleEdit()}>
-                            <MoreHorizIcon fontSize='default'></MoreHorizIcon>
-                        </Button>
-                    </div>
-                </>}
+                {user && (user.userId === post.creator[0]._id) &&
+                    <>
+                        <div className={classes.overlay2} >
+                            <Button style={{ color: "white" }} size='small' onClick={() => handleEdit()}>
+                                <MoreHorizIcon fontSize='medium'></MoreHorizIcon>
+                            </Button>
+                        </div>
+                    </>
+                }
 
                 <div className={classes.details}>
                     <Typography variant='body2' color='textSecondary'>{post.tags.map((tag) => `#${tag} `)}</Typography>
@@ -68,13 +55,13 @@ export const Post = ({ post, deletePost }) => {
 
                 <CardActions className={classes.cardActions}>
                     {user ? <Button size='small' color='primary' onClick={() => handleLike()}>
-                        <ThumbUpAltIcon fontSize='default'></ThumbUpAltIcon>
+                        <ThumbUpAltIcon fontSize='medium'></ThumbUpAltIcon>
                         Like &nbsp;
                         {post.likeCount}
                     </Button>
                         :
                         <Button size='small' disabled color='primary' onClick={() => handleLike()}>
-                            <ThumbUpAltIcon fontSize='default'></ThumbUpAltIcon>
+                            <ThumbUpAltIcon fontSize='medium'></ThumbUpAltIcon>
                             Like &nbsp;
                             {post.likeCount}
                         </Button>
@@ -82,12 +69,12 @@ export const Post = ({ post, deletePost }) => {
                     {user && (user.userId === post.creator[0]._id) ?
                         <>
                             <Button Button size='small' color='primary' onClick={() => handleDelete()}>
-                                <DeleteIcon fontSize='default'></DeleteIcon>
+                                <DeleteIcon fontSize='medium'></DeleteIcon>
                                 &nbsp; Delete
                             </Button>
                         </>
                         :
-                        <Paper variant='h6'>Post By : {post.creator[0].Name.toUpperCase()}</Paper>
+                        <Paper variant='elevation'>Post By : {post.creator[0].Name.toUpperCase()}</Paper>
                     }
                 </CardActions>
             </Card >

@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'
 import Post from '../models/posts.js'
 import User from '../models/user.js'
+const count = 0
 
 export const GetPost = async (req, res) => {
-    const Posts = await Post.find({}).populate("creator")
+    const Posts = await Post.find().populate("creator")
     res.status(200).json(Posts)
 }
 
@@ -89,6 +90,26 @@ export const like = async (req, res) => {
         UpdatedPost.save()
         res.status(200).json(UpdatedPost)
     }
+}
+
+export const SearchPost = async (req, res) => {
+    const { postTitle } = req.body
+    const { tags } = req.body
+
+    let postFindedByTitle = []
+    let PostFindedByTags = []
+
+    if (postTitle) {
+        postFindedByTitle = await Post.find({ title: { $regex: postTitle } }).populate("creator")
+    }
+
+    if (tags !== undefined && tags.length != 0) {
+        PostFindedByTags = await Post.find({ tags: { $regex: tags.toString() } })
+            .populate("creator")
+    }
+
+    const posts = [...postFindedByTitle, ...PostFindedByTags]
+    res.status(200).json(posts)
 }
 
 // Post.deleteMany({}).then(res => console.log(res))
@@ -236,3 +257,4 @@ export const like = async (req, res) => {
 // ]
 
 // Post.insertMany(postData).then(res => console.log(res))
+

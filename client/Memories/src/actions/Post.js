@@ -1,5 +1,5 @@
 import * as api from '../api/index.js'
-import { PostAction, PostIdAction } from '../store/Post.js';
+import { PostAction, PostIdAction, SearchPostAction } from '../store/Post.js';
 
 const withErrorHandling = async (dispatch, acitonFunction, actionCreate) => {
     try {
@@ -55,5 +55,13 @@ export const like = (Id) => async (dispatch) => {
         dispatch,
         async () => await api.Like(Id),
         PostAction.like
+    )
+}
+
+export const SearchPostActFun = (PostDetails) => async (dispatch) => {
+    await withErrorHandling(
+        dispatch,
+        async () => await api.SearchPost(PostDetails),
+        SearchPostAction.getSearchPost
     )
 }
