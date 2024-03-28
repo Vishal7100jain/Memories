@@ -100,12 +100,11 @@ export const SearchPost = async (req, res) => {
     let PostFindedByTags = []
 
     if (postTitle) {
-        postFindedByTitle = await Post.find({ title: { $regex: postTitle } }).populate("creator")
+        postFindedByTitle = await Post.find({ title: { $regex: postTitle, $options: 'i' } }).populate("creator")
     }
 
     if (tags !== undefined && tags.length != 0) {
-        PostFindedByTags = await Post.find({ tags: { $regex: tags.toString() } })
-            .populate("creator")
+        PostFindedByTags = await Post.find({ tags: { $in: tags } }).populate("creator")
     }
 
     const posts = [...postFindedByTitle, ...PostFindedByTags]

@@ -6,11 +6,10 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
 import { PostToUpdate, like } from '../../../actions/Post'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
 export const Post = ({ post, user, deletePost }) => {
     let dispatch = useDispatch()
-    let [render, setRender] = useState(false)
 
     function handleLike() {
         dispatch(like(post._id))
@@ -27,7 +26,7 @@ export const Post = ({ post, user, deletePost }) => {
     const classes = makeStyles()
     return (
         <>
-            <Card className={classes.card}>
+            <Card className={classes.card} raised elevation={8}>
                 <CardMedia className={classes.media} image={post.selectedFile} src={post.selectedFile} title={post.title}></CardMedia>
 
                 <div className={classes.overlay}>
