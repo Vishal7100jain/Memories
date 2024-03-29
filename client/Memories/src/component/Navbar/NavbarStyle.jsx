@@ -10,13 +10,22 @@ export default makeStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px 50px',
+        [theme.breakpoints.down("sm")]: {
+            padding: '0',
+        }
     },
+
     heading: {
         color: 'rgba(0,183,255, 1)',
         textDecoration: 'none',
     },
+
     image: {
         marginLeft: '15px',
+        height: '7vh',
+        [theme.breakpoints.down("sm")]: {
+            height: '4vh',
+        }
     },
     toolbar: {
         display: 'flex',

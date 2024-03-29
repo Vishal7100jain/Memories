@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { AuthAction } from '../../store/Auth.js';
 import jwtDecode from 'jwt-decode';
+import { RiLoginCircleFill } from "react-icons/ri";
 
 const Navbar = () => {
     let [user, setUser] = useState(JSON.parse(localStorage.getItem('Profile')))
@@ -39,10 +40,10 @@ const Navbar = () => {
         <AppBar className={classes.appBar} position='static' color='inherit'>
             <div className={classes.brandContainer}>
                 <Typography component={Link} to='/' className={classes.heading} variant='h2' align='center'>
-                    <img src={LogoText} className={classes.image} alt="Memories" height="60" />
+                    <img src={LogoText} className={classes.image} alt="Memories" />
 
                 </Typography>
-                <img src={images} className={classes.image} alt="Memories" height="60" />
+                <img src={images} className={classes.image} alt="Memories" />
             </div>
             <Toolbar className={classes.toolbar}>
                 {user ? (
@@ -56,7 +57,7 @@ const Navbar = () => {
                         </LoadingButton>
                     </div>
                 ) : (
-                    <Button component={Link} to='/auth' variant='contained' color='primary'>Sign Up</Button>
+                    <Button component={Link} to='/auth' variant='contained' color='primary'><RiLoginCircleFill fontSize='xx-large' /></Button>
                 )}
             </Toolbar>
         </AppBar>
