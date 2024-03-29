@@ -65,3 +65,11 @@ export const SearchPostActFun = (PostDetails) => async (dispatch) => {
         SearchPostAction.getSearchPost
     )
 }
+
+export const getPostFromId = (Id) => async (dispatch) => {
+    await withErrorHandling(
+        dispatch,
+        async () => await api.getPostFromId(Id),
+        PostAction.GetPostFromId
+    )
+}

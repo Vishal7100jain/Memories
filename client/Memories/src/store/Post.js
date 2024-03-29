@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const PostsSlice = createSlice({
     name: "Post",
-    initialState: { Posts: [] },
+    initialState: { Posts: [], post: [], isloading: true },
     reducers: {
         GetPost: (state, action) => {
             state.Posts = action.payload
@@ -36,6 +36,10 @@ export const PostsSlice = createSlice({
         GetPostBySearch: (state, action) => {
             state.Posts = action.payload
         },
+        GetPostFromId: (state, action) => {
+            state.isloading = false
+            state.post = action.payload
+        }
     }
 })
 

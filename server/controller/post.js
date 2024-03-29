@@ -110,3 +110,10 @@ export const SearchPost = async (req, res) => {
     const posts = [...postFindedByTitle, ...PostFindedByTags]
     res.status(200).json(posts)
 }
+
+export const PostById = async (req, res) => {
+    const { id } = req.params
+    const post = await Post.findOne({ _id: id }).populate("creator")
+    if (!post) return res.status(404).json({ msg: "Bad request" })
+    res.status(200).json(post)
+}

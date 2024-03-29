@@ -11,8 +11,7 @@ const Posts = ({ loading, setLoadingForSeachPost }) => { // Receive loading stat
     const SearchPost = useSelector((state) => state.SearchPost)
     const dispatch = useDispatch()
     const [data, setData] = useState(false)
-    const user = localStorage.getItem("Profile")
-    console.log(user)
+    const user = JSON.parse(localStorage.getItem("Profile"))
     const classes = makeStyles()
     const [isLoading, setLoading] = useState(true)
 
@@ -29,12 +28,6 @@ const Posts = ({ loading, setLoadingForSeachPost }) => { // Receive loading stat
 
         loadData()
     }, [dispatch])
-
-
-    useEffect(() => {
-        setData(!data)
-        setLoadingForSeachPost(false)
-    }, [SearchPost, Posts, user])
 
     return (
         <div className={classes.mainContainer}>
