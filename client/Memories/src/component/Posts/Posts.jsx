@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import makeStyles from './style'
 import { useDispatch, useSelector } from 'react-redux'
 import { DeletePost, fetchData } from '../../actions/Post.js'
-import { CircularProgress, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { Post } from './Post/post.jsx'
 import Skeleton from '../Skeleton/Skeleton.jsx'
 
-const Posts = ({ loading, setLoadingForSeachPost }) => { // Receive loading state as a prop
+const Posts = ({ loading }) => { // Receive loading state as a prop
     const { Posts } = useSelector((state) => state.Post)
     const SearchPost = useSelector((state) => state.SearchPost)
     const dispatch = useDispatch()

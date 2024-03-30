@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
+import commentModel from './comment.js'
 
 const postSchema = new mongoose.Schema({
     title: {
@@ -28,9 +29,20 @@ const postSchema = new mongoose.Schema({
         default: 0
     },
 
+    comment: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'comment'
+    }],
+
     createdAt: {
         type: Date,
         default: new Date()
+    }
+})
+
+postSchema.post("findOneAndDelete", async (post) => {
+    if (post) {
+        await commentModel.deleteMany({ _id: { $in: post.comment } })
     }
 })
 

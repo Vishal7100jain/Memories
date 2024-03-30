@@ -69,7 +69,7 @@ export const Post = ({ post, user, deletePost }) => {
                     }
                     {user && (user.userId === post.creator[0]._id) ?
                         <>
-                            <Button Button size='small' color='primary' onClick={() => handleDelete()}>
+                            <Button size='small' color='secondary' onClick={() => handleDelete()}>
                                 <DeleteIcon fontSize='medium'></DeleteIcon>
                                 &nbsp; Delete
                             </Button>

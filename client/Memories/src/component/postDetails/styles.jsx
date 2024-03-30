@@ -41,4 +41,54 @@ export default makeStyles((theme) => ({
     loadingPaper: {
         display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', borderRadius: '15px', height: '39vh',
     },
+    appContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flexStart',
+        width: '500px',
+    },
+    commentContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: '10px',
+        width: '100%', // Changed to 100%
+    },
+
+    commentsInnerContainer: {
+        display: "flex",
+        flexDirection: "column", // Changed to column
+        width: '100%', // Changed to 100%
+        height: '80px',
+        marginBottom: '20px', // Added a fixed height
+        overflow: 'scroll', // Changed from scroll to auto
+
+    },
+
+    commentUser: {
+        fontWeight: 'bold',
+        marginRight: '5px',
+    },
+
+    commentText: {
+        marginRight: '5px',
+    },
+    PostTilte: {
+        textDecoration: 'none',
+        color: 'black',
+    },
+    recommendedPostsImg: {
+        height: '10vw',
+        width: '10vw'
+    },
+    Link: {
+        display: 'grid',
+        width: '15vw',
+        flexDirection: "row",
+        margin: '20px',
+        padding: '20px 0',
+        cursor: "pointer",
+        fontSize: 'large',
+        textDecoration: 'none'
+    }
 }));

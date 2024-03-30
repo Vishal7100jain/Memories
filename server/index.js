@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import PostRoute from "./routes/posts.js";
 import UserRoute from './routes/user.js'
 import User from "./models/user.js";
+import commentModule from "./models/comment.js";
 
 dotenv.config()
 
@@ -29,5 +30,6 @@ app.use("/User", UserRoute)
 
 // User.deleteMany({}).then(res => console.log(res))
 // User.find({}).then(res => console.log(res))
-
+// commentModule.find({}).then(res => console.log(res.length))
+// commentModule.deleteMany({}).then(res => console.log(res))
 
