@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const PostsSlice = createSlice({
     name: "Post",
-    initialState: { Posts: [], post: [], isloading: true },
+    initialState: { Posts: [], post: [], isloading: true, recommendedPosts: [] },
     reducers: {
         GetPost: (state, action) => {
             state.Posts = action.payload
@@ -18,11 +18,10 @@ export const PostsSlice = createSlice({
         UpdatePost: (state, action) => {
             state.Posts = state.Posts.map((item) => {
                 if (item._id === action.payload._id) {
-                    item = action.payload
-                    return item
+                    item = action.payload;
                 }
-            })
-            return state.Posts
+                return item
+            });
         },
         like: (state, action) => {
             state.Posts = state.Posts.map((item) => {
@@ -39,6 +38,19 @@ export const PostsSlice = createSlice({
         GetPostFromId: (state, action) => {
             state.isloading = false
             state.post = action.payload
+        },
+        setComment: (state, action) => {
+            state.Posts = state.Posts.map((item) => {
+                if (item._id === action.payload._id) {
+                    item = action.payload
+                }
+                return item
+            })
+            state.post = action.payload
+        },
+        recommendedPostsSearch: (state, action) => {
+            const updatedPayload = action.payload.filter(item => item._id !== state.post._id);
+            state.recommendedPosts = updatedPayload;
         }
     }
 })

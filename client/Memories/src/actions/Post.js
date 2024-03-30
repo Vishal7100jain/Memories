@@ -66,10 +66,26 @@ export const SearchPostActFun = (PostDetails) => async (dispatch) => {
     )
 }
 
+export const recommendedPostsSearchFun = (PostDetails) => async (dispatch) => {
+    await withErrorHandling(
+        dispatch,
+        async () => await api.SearchPost(PostDetails),
+        PostAction.recommendedPostsSearch
+    )
+}
+
 export const getPostFromId = (Id) => async (dispatch) => {
     await withErrorHandling(
         dispatch,
         async () => await api.getPostFromId(Id),
         PostAction.GetPostFromId
+    )
+}
+
+export const PostComment = (Id, comment) => async (dispatch) => {
+    await withErrorHandling(
+        dispatch,
+        async () => await api.postComment(Id, comment),
+        PostAction.setComment
     )
 }
