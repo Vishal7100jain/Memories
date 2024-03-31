@@ -5,8 +5,6 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv'
 import PostRoute from "./routes/posts.js";
 import UserRoute from './routes/user.js'
-import User from "./models/user.js";
-import commentModule from "./models/comment.js";
 
 dotenv.config()
 
@@ -15,7 +13,7 @@ const app = express()
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
-app.use(cors())
+app.use(cors({ origin: "https://elaborate-paprenjak-fdfea9.netlify.app/posts" }))
 
 const PORT = process.env.PORT || 5000
 
