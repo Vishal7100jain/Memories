@@ -23,8 +23,8 @@ function App() {
           <Container maxWidth='xl'>
             <Navbar />
             <Routes >
-              <Route path='/' exact element={< Navigate to={"/posts"} />} />
-              <Route path='/posts' exact element={<MainContainer />}></Route>
+              <Route path='/' exact element={< Navigate to={"/post"} />} />
+              <Route path='/post' exact element={<MainContainer />}></Route>
               <Route path='/posts/Search' exact element={<MainContainer />}></Route>
               <Route path='/posts/:id' exact element={<PostDetails />} />
               <Route path='/auth' element={!user ? <Auth /> : < Navigate to={'/posts/'} />} ></Route>
