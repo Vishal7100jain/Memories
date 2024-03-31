@@ -13,7 +13,7 @@ const app = express()
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
-app.use(cors({ origin: "https://elaborate-paprenjak-fdfea9.netlify.app/", credentials: true, }))
+app.use(cors({ origin: "https://tiny-salamander-a7ab00.netlify.app/post", credentials: true, }))
 
 const PORT = process.env.PORT || 5000
 
