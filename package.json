@@ -15,8 +15,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/index.js",
+    "build": "npm i && npm i --legacy-peer-deps --prefix client/Memories && npm run build --prefix client/Memories"
   },
   "keywords": [],
   "author": "",

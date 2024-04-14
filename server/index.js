@@ -5,19 +5,23 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv'
 import PostRoute from "./routes/posts.js";
 import UserRoute from './routes/user.js'
+import path from 'path'
 
 dotenv.config()
 
 const MONGO_URL = process.env.MONGO_URL
 const app = express()
 
+const __dirname = path.resolve()
+
+app.use(express.static(path.join(__dirname, "/client/Memories/dist")))
+
 app.use(bodyParser.json({ limit: "30mb", extended: true }))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
-app.use(cors({
-    origin: "https://6615071ca9711c9363b8d31d--rainbow-lolly-9e9c0f.netlify.app/post",
-    methods: ['GET', 'POST']
-}))
 
+app.use(cors({
+    origin: "http://localhost:5173"
+}))
 
 const PORT = process.env.PORT || 5000
 
@@ -29,7 +33,7 @@ mongoose.connect(MONGO_URL)
 
 app.use("/", PostRoute)
 app.use("/User", UserRoute)
-
+app.get("*")
 // User.deleteMany({}).then(res => console.log(res))
 // User.find({}).then(res => console.log(res))
 // commentModule.find({}).then(res => console.log(res.length))
