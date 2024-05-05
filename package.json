@@ -16,7 +16,7 @@
   "type": "module",
   "scripts": {
     "start": "node server/index.js",
-    "build": "npm i && npm i --legacy-peer-deps --prefix client/Memories && npm run build --prefix client/Memories"
+    "build": "npm i && npm i --legacy-peer-deps --prefix client/Memories && npm run build --prefix client/Memories --output client/Memories"
   },
   "keywords": [],
   "author": "",
